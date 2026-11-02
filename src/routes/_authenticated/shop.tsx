@@ -29,7 +29,7 @@ function Shop() {
 
   const buy = async (id: string) => {
     const { error } = await supabase.rpc("buy_avatar", { _avatar_id: id });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Avatar unlocked! Equip it from your profile.");
     qc.invalidateQueries({ queryKey: ["shop"] });
     refreshProfile();

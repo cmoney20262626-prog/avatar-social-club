@@ -20,7 +20,7 @@ function Redeem() {
 
   const daily = async () => {
     const { data, error } = await supabase.rpc("claim_daily");
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(`+${data} coins!`);
     refreshProfile();
   };
@@ -28,7 +28,7 @@ function Redeem() {
   const redeem = async (e: React.FormEvent) => {
     e.preventDefault();
     const { data, error } = await supabase.rpc("redeem_gift_card", { _code: code });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(`Gift card redeemed: +${data} coins!`);
     setCode("");
     refreshProfile();

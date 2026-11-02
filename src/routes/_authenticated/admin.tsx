@@ -52,7 +52,7 @@ function AvatarsAdmin() {
 
   const upload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) return toast.error("Pick a .glb file");
+    if (!file) { toast.error("Pick a .glb file"); return; }
     setBusy(true);
     const path = `${crypto.randomUUID()}.glb`;
     const up = await supabase.storage
@@ -60,13 +60,14 @@ function AvatarsAdmin() {
       .upload(path, file, { contentType: "model/gltf-binary" });
     if (up.error) {
       setBusy(false);
-      return toast.error(up.error.message);
+      toast.error(up.error.message);
+      return;
     }
     const { error } = await supabase
       .from("avatars")
       .insert({ name, description: desc, price: Math.max(0, parseInt(price) || 0), model_path: path });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Avatar added to the shop!");
     setName(""); setDesc(""); setFile(null);
     (e.target as HTMLFormElement).reset();
@@ -78,7 +79,7 @@ function AvatarsAdmin() {
     if (!confirm("Delete this avatar? Owners will lose it.")) return;
     await supabase.storage.from("avatar-models").remove([path]);
     const { error } = await supabase.from("avatars").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["admin-avatars"] });
   };
 
@@ -130,7 +131,7 @@ function UsersAdmin() {
 
   const run = async (fn: () => PromiseLike<{ error: { message: string } | null }>, msg: string) => {
     const { error } = await fn();
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(msg);
     qc.invalidateQueries({ queryKey: ["admin-users"] });
     refreshProfile();
@@ -169,7 +170,7 @@ function UsersAdmin() {
                       variant="coin"
                       onClick={() => {
                         const n = parseInt(amounts[u.id] ?? "");
-                        if (!n) return toast.error("Enter an amount");
+                        if (!n) { toast.error("Enter an amount"); return; }
                         run(() => supabase.rpc("admin_gift_coins", { _user_id: u.id, _amount: n }), `Gave ${n} coins to @${u.username}`);
                         setAmounts({ ...amounts, [u.id]: "" });
                       }}
@@ -211,7 +212,7 @@ function CardsAdmin() {
 
   const create = async () => {
     const { data, error } = await supabase.rpc("admin_create_gift_card", { _coins: parseInt(coins) || 0 });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     navigator.clipboard?.writeText(data).catch(() => {});
     toast.success(`Gift card ${data} created and copied!`);
     qc.invalidateQueries({ queryKey: ["admin-cards"] });

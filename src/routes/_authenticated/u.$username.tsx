@@ -70,7 +70,7 @@ function ProfilePage() {
 
   const equip = async (id: string | null) => {
     const { error } = await supabase.rpc("equip_avatar", { _avatar_id: id as string });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(id ? "Avatar equipped!" : "Avatar removed");
     refresh();
     refreshProfile();
@@ -78,7 +78,7 @@ function ProfilePage() {
 
   const save = async () => {
     const { error } = await supabase.from("profiles").update({ display_name: dn, bio }).eq("id", me);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setEditing(false);
     refresh();
     refreshProfile();

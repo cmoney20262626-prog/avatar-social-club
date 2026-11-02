@@ -51,7 +51,7 @@ export function PostCard({ post }: { post: FeedPost }) {
     const { error } = await supabase
       .from("comments")
       .insert({ post_id: post.id, user_id: me!, content: text.trim() });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setText("");
     refresh();
   };

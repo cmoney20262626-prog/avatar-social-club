@@ -42,7 +42,7 @@ function Feed() {
     const { error } = await supabase
       .from("posts")
       .insert({ user_id: session!.user.id, content: text.trim() });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setText("");
     qc.invalidateQueries({ queryKey: ["posts"] });
   };

@@ -61,7 +61,7 @@ function Chat() {
     const { error } = await supabase
       .from("messages")
       .insert({ sender_id: me, recipient_id: userId, content: text.trim() });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setText("");
     qc.invalidateQueries({ queryKey: ["chat", userId] });
     qc.invalidateQueries({ queryKey: ["convos"] });
