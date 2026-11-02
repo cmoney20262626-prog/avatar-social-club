@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# Avatar Social Club
+
+make me a social media web site and make it where there is a shop for avaters wherethere is a admin panel where i can upload avaters from meshy and make it where i can gift people coins to get the avaters and make it where i can give people admin and ban people
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://avatar-social-club.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/0f922cfd-66b6-4b4a-b60b-3db9d29c47ad).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
